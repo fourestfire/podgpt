@@ -47,10 +47,10 @@ export function Navbar() {
   return (
     <nav className={classes.navbar}>
       <div className={classes.navbarMain}>
-        <Group className={classes.header} justify="space-between">
+        {/* <Group className={classes.header} justify="space-between">
           <MantineLogo size={28} />
           <Code fw={700}>v3.1.2</Code>
-        </Group>
+        </Group> */}
         {links}
       </div>
 
