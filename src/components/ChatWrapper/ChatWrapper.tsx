@@ -41,12 +41,16 @@ import { useFetchData } from '@/src/hooks';
 
 import classes from './ChatWrapper.module.css';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { ChatItemProps } from './ChatItem/ChatItem';
 
+import { v4 as uuidv4 } from 'uuid';
+
+
+
+
 function createChatItem(data: ChatItemProps) {
-  console.log(data);
   return (
     <ChatItem
       key={data.id}
@@ -79,12 +83,13 @@ const PAPER_PROPS: PaperProps = {
 };
 
 
-
 function ChatWrapper() {
   const theme = useMantineTheme();
   const colorScheme = useColorScheme();
   const tablet_match = useMediaQuery('(max-width: 768px)');
   const [value, setValue] = useState('');
+  const [chatItems, setChatItems] = useState([]);
+  const lastChatItemRef = useRef(null);
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -104,13 +109,21 @@ function ChatWrapper() {
     error: chatsItemsError,
   } = useFetchData('/mocks/ChatItems.json');
 
-  console.log('chatsListLoading:', chatsListLoading);
-  console.log('chatsItemsLoading:', chatsItemsLoading);
+  // Update chatItemsData
+  useEffect(() => {
+    if (chatItemsData) {
+      setChatItems(chatItemsData);
+    }
+  }, [chatItemsData]);
+
+  const viewport = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () =>
+    viewport.current!.scrollTo({ top: viewport.current!.scrollHeight, behavior: 'smooth' });
 
   const handleSendMessage = () => {
-     console.log('handleSendMessage was called');
-        const newChatItemData: ChatItemProps = {
-            id: "new-id",
+        const newChatItem: ChatItemProps = {
+            id: uuidv4(),
             fullName: "New User",
             avatar: "https://res.cloudinary.com/ddh7hfzso/image/upload/v1700303804/me/ovqjhhs79u3g2fwbl2dd.jpg",
             sent_time: new Date().toISOString(), // Use the current date and time
@@ -119,7 +132,14 @@ function ChatWrapper() {
             loading: false
         };
 
-        createChatItem(newChatItemData);
+        // createChatItem(newChatItemData);
+        setChatItems([...chatItems, newChatItem]);
+
+        // clear input field
+        setValue('');
+
+        // Scroll to the last chat item
+        // lastChatItemRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
   return (
@@ -249,7 +269,7 @@ function ChatWrapper() {
                       </Flex>
                     </Skeleton>
                   </Box>
-                  <ScrollArea h={515}>
+                  <ScrollArea h={515} viewportRef={viewport}>
                     <Stack px="lg" py="xl">
                       {chatsItemsError ? (
                         <ErrorAlert
@@ -257,36 +277,37 @@ function ChatWrapper() {
                           message={chatsItemsError.toString()}
                         />
                       ) : (
-                        chatItemsData.length > 0 &&
-                        chatItemsData.map((c: any) => createChatItem({
-                            key: c.id,
-                            id: c.id,
-                            avatar: c.avatar,
-                            message: c.message,
-                            fullName: c.sender ? 'you' : `${c?.first_name} ${c.last_name}`,
-                            sender: c.sender,
-                            sent_time: c.sent_time,
-                            loading: chatsItemsLoading,
-                            // Add any other props you need for ChatItem
-                          }))
-                        // chatItemsData.map((c: any) => (
-                        //   <ChatItem
-                        //     key={c.id}
-                        //     avatar={c.avatar}
-                        //     id={c.id}
-                        //     message={c.message}
-                        //     fullName={
-                        //       c.sender
-                        //         ? 'you'
-                        //         : `${c?.first_name} ${c.last_name}`
-                        //     }
-                        //     sender={c.sender}
-                        //     sent_time={c.sent_time}
-                        //     ml={c.sender ? 'auto' : 0}
-                        //     style={{ maxWidth: tablet_match ? '100%' : '70%' }}
-                        //     loading={chatsItemsLoading}
-                        //   />
-                        // ))
+                        chatItems.length > 0 &&
+                        // chatItemsData.map((c: any) => createChatItem({
+                        //     key: c.id,
+                        //     id: c.id,
+                        //     avatar: c.avatar,
+                        //     message: c.message,
+                        //     fullName: c.sender ? 'you' : `${c?.first_name} ${c.last_name}`,
+                        //     sender: c.sender,
+                        //     sent_time: c.sent_time,
+                        //     loading: chatsItemsLoading,
+                        //     // Add any other props you need for ChatItem
+                        //   }))
+                        chatItems.map((c: any, index) => (
+                          <ChatItem
+                            // ref={index === chatItems.length - 1 ? lastChatItemRef : null}
+                            key={c.id}
+                            avatar={c.avatar}
+                            id={c.id}
+                            message={c.message}
+                            fullName={
+                              c.sender
+                                ? 'you'
+                                : `${c?.first_name} ${c.last_name}`
+                            }
+                            sender={c.sender}
+                            sent_time={c.sent_time}
+                            ml={c.sender ? 'auto' : 0}
+                            style={{ maxWidth: tablet_match ? '100%' : '70%' }}
+                            loading={chatsItemsLoading}
+                          />
+                        ))
                       )}
                     </Stack>
                   </ScrollArea>
@@ -318,7 +339,10 @@ function ChatWrapper() {
                       <Tooltip label="Send message">
                         <ActionIcon 
                           component="button"
-                          onClick={handleSendMessage}
+                          onClick={() => {
+                            handleSendMessage();
+                            scrollToBottom();
+                          }}
                           title="send message"
                           variant="filled"
                           size="xl"

@@ -38,7 +38,7 @@ const ChatItem = (props: ChatItemProps) => {
       <Skeleton height={60} />
     </Flex>
   ) : (
-    <Box {...others}>
+    <Box component="div" {...others}>
       <Flex gap="xs">
         <Avatar src={avatar} radius="50%" />
         <Box>
