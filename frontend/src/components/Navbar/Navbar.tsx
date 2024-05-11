@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Group, Code } from '@mantine/core';
 import {
   IconBellRinging,
@@ -11,14 +11,20 @@ import {
   IconReceipt2,
   IconSwitchHorizontal,
   IconLogout,
+  IconMoodSmileBeam,
+  IconScanEye,
+  IconSquareRotated,
+  IconPacman,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Navbar.module.css';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const data = [
-  { link: '', label: 'Home', icon: IconHome2 },
-  { link: '', label: 'Fun', icon: IconReceipt2 },
-  { link: '', label: 'Pearpod', icon: IconFingerprint },
+  { link: '/', label: 'Standard', icon: IconSquareRotated },
+  { link: '/emoji', label: 'Emoji', icon: IconMoodSmileBeam },
+  { link: '/vision', label: 'Vision', icon: IconScanEye },
 //   { link: '', label: 'SSH Keys', icon: IconKey },
 //   { link: '', label: 'Databases', icon: IconDatabaseImport },
 //   { link: '', label: 'Authentication', icon: Icon2fa },
@@ -26,22 +32,30 @@ const data = [
 ];
 
 export function Navbar() {
+  // This code ensures that using the back button still highlights the correct link
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentLabel = data.find(item => item.link === location.pathname)?.label;
+    setActive(currentLabel || 'Standard');
+  }, [location]);
+
   const [active, setActive] = useState('Billing');
 
   const links = data.map((item) => (
-    <a
+    <Link
       className={classes.link}
       data-active={item.label === active || undefined}
-      href={item.link}
+      to={item.link}
       key={item.label}
       onClick={(event) => {
-        event.preventDefault();
+        // event.preventDefault();
         setActive(item.label);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </Link>
   ));
 
   return (
@@ -56,8 +70,8 @@ export function Navbar() {
 
       <div className={classes.footer}>
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
-          <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
-          <span>Change account</span>
+          <IconPacman className={classes.linkIcon} stroke={1.5} />
+          <span>About Us</span>
         </a>
 
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>

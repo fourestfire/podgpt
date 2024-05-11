@@ -1,13 +1,20 @@
+import { useEffect } from 'react';
 import {
   Avatar,
   Box,
   BoxProps,
+  Code,
   Flex,
   Paper,
   Skeleton,
+  Loader,
   Text,
+  TypographyStylesProvider,
+  Image,
 } from '@mantine/core';
 import classes from './ChatItem.module.css';
+import React from 'react';
+import Marked from 'marked-react';
 
 export type ChatItemProps = {
   id: string;
@@ -17,6 +24,7 @@ export type ChatItemProps = {
   message: string;
   sender: boolean;
   loading?: boolean;
+  images?: string[] | null;
 } & BoxProps;
 
 const ChatItem = (props: ChatItemProps) => {
@@ -28,6 +36,7 @@ const ChatItem = (props: ChatItemProps) => {
     sender,
     sent_time,
     loading,
+    images,
     ...others
   } = props;
   const isMe = fullName.toLowerCase() === 'you';
@@ -55,9 +64,30 @@ const ChatItem = (props: ChatItemProps) => {
             >
               {fullName}
             </Text>
-            <Text size="sm" c={isMe ? 'white' : 'initial'}>
-              {message}
-            </Text>
+            {/* <Text size="sm" c={isMe ? 'white' : 'initial'}> */}
+            <TypographyStylesProvider>
+              <div style={{ fontSize: '0.875rem', color: isMe ? 'white' : 'initial' }}>
+                {message === "loading..." ? ( // using message contents to determine if loading. not best practice (mixing concerns, should be using prop instead) but fine
+                  <Loader color="blue.3" type="dots" size="sm"/> // display loader if loading
+                ) : (
+                  <Marked>{message}</Marked> // otherwise display main content
+                )}
+              </div>
+            </TypographyStylesProvider>
+            {/* </Text> */}
+            <Flex direction="row" wrap="wrap">
+              {images && images.map((image, index) => (
+                <Image
+                  key={index}
+                  radius="md"
+                  h={200}
+                  w="auto"
+                  fit="contain"
+                  src={image}
+                  style={{ margin: '5px'}}
+                />
+              ))}
+            </Flex>
           </Paper>
           <Text ta="end" size="sm" mt={4}>
             {sent_time}
@@ -67,5 +97,6 @@ const ChatItem = (props: ChatItemProps) => {
     </Box>
   );
 };
+
 
 export default ChatItem;

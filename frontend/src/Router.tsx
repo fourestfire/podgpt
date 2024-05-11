@@ -7,8 +7,16 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: '/backend/', // Add this line
-    element: <HomePage />, // And this line
+    path: '/', 
+    element: <HomePage modelType="Standard" />, 
+  },
+  {
+    path: '/emoji/', 
+    element: <HomePage modelType="Emoji" />, 
+  },
+  {
+    path: '/vision/', 
+    element: <HomePage modelType="Vision" />, 
   },
 ]);
 

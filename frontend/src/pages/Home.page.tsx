@@ -6,12 +6,16 @@ import { AppGrid } from '../components/AppGrid/AppGrid';
 import ChatWrapper from '../components/ChatWrapper/ChatWrapper';
 // import { DropzoneButton } from '../components/DropzoneButton/DropzoneButton';
 import { HeroContent } from '../components/HeroContent/HeroContent';
+import GPT from '../components/GPT/GPT';
 import '@mantine/carousel/styles.css';
+interface HomePageProps {
+  modelType?: string;
+}
 
-export function HomePage() {
+export const HomePage: React.FC<HomePageProps> = ({ modelType }) => {
   return (
     <>
-      <AppGrid mainContent={<ChatWrapper />} />
+      <AppGrid mainContent={<ChatWrapper modelType={modelType}/>} />
       {/* <ColorSchemeToggle /> */}
     </>
   );

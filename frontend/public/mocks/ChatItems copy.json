@@ -1,0 +1,19 @@
+[
+  {
+    "id": "2959a1ad-d66c-4259-9c90-dea3e28c7c3f",
+    "fullName": "Fernande Trynor",
+    "avatar": "https://res.cloudinary.com/ddh7hfzso/image/upload/v1700303804/me/ovqjhhs79u3g2fwbl2dd.jpg",
+    "sent_time": "5/9/2023",
+    "message": "Nam ultrices, libero non mattis pulvinar, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.",
+    "sender": true
+  },
+  {
+    "id": "3777925e-935e-4017-8ccc-10b8bab97f7e",
+    "fullName": "Ilario Baldocci",
+
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
+    "sent_time": "8/25/2022",
+    "message": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.",
+    "sender": false
+  }
+]
