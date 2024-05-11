@@ -21,6 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key')
+
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'fallback-secret-key')
 SECRET_KEY = 'django-insecure-q3ikxsf8f9+isub-kar@vg6#nc00$6&f@a$&1eomk1*iqtx-23'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -144,4 +151,5 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:8000", 
+    "https://spiffy-fox-4881fd.netlify.app",
 ]
