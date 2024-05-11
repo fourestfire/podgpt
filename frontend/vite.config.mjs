@@ -16,7 +16,8 @@ export default defineConfig({
     // generate .vite/manifest.json in outDir
     // manifest: true,
     manifest: "manifest.json",
-    outDir: resolve(__dirname, "./assets"), // Output to assets directory in project root
+    // outDir: resolve(__dirname, "./dist"), default is dist
+    // assetsDir: default is assets folder nested under outdir
     rollupOptions: {
       // overwrite default .html entry
       // input: '/path/to/main.js',
