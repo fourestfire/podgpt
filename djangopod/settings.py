@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-q3ikxsf8f9+isub-kar@vg6#nc00$6&f@a$&1eomk1*iqtx-23
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000', 'http://0.0.0.0:8000', 'http://localhost:5173']
 
 
 # Application definition
@@ -137,5 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #   }
 # }
 
-# Remember to replace True with the actual origins you want to allow in a production environment.
-CORS_ALLOW_ALL_ORIGINS = True
+# TODO: Remember to replace True with the actual origins you want to allow in a production environment.
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:8000", 
+]
