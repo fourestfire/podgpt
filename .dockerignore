@@ -1,0 +1,41 @@
+# flyctl launch added from .gitignore
+#react vite
+**/node_modules
+dist
+.cache
+.vite
+.vscode
+**/.env
+**/.env.local
+**/.env.*.local
+**/.env.*.development
+**/.env.*.production
+
+# .gitignore
+**/__pycache__
+**/*.py[cod]
+**/*.log
+**/*.csv
+**/*.dat
+**/*.out
+**/*.pid
+**/*.gz
+
+# Django
+**/*.log
+**/*.pot
+**/*.pyc
+**/*.pyo
+**/*.mo
+**/*.sqlite3
+**/*.swp
+**/*~
+static
+media
+
+# Environment files
+**/.env
+
+# OS
+**/.DS_Store
+fly.toml

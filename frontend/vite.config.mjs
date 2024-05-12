@@ -5,7 +5,7 @@ import path from 'path';
 import { resolve } from 'path';
 
 export default defineConfig({
-  base: "/static/",
+  base: '/static/',
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {

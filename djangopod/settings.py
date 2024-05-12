@@ -29,7 +29,7 @@ if not SECRET_KEY:
     raise ValueError("The DJANGO_SECRET_KEY environment variable is not set")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'djangopod.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend','html')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend','html')], # Django looks for the template source file here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,10 +126,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # used during production. Django stores static files here
+print("BASE_DIR is", BASE_DIR) 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend','public'),
-    os.path.join(BASE_DIR, 'frontend', 'assets'),
+    os.path.join(BASE_DIR, 'frontend','assets'),
+    os.path.join(BASE_DIR, 'frontend','dist'),
 ]
 
 # Default primary key field type

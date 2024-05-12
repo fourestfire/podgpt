@@ -8,7 +8,9 @@ const useFetchData = (url: string) => {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(url);
+      // console.log('response from useFetchData:', response)
       const json = await response.json();
+
 
       setData(json);
     } catch (error) {

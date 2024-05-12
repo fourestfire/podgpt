@@ -3,8 +3,8 @@ import { HomePage } from './pages/Home.page';
 
 const router = createBrowserRouter([
   {
-    path: '/static',
-    element: <HomePage />,
+    path: '/static/', 
+    element: <HomePage modelType="Standard" />, 
   },
   {
     path: '/', 
