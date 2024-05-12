@@ -1,18 +1,18 @@
 {
   "index.html": {
-    "file": "assets/index-DTM5uuD0.js",
+    "file": "assets/index-dsnkp2li.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-CWRpr1WJ.css"
+      "assets/index-bt1nbcbv.css"
     ],
     "assets": [
-      "assets/favicon-Bt4n31A2.svg"
+      "assets/favicon-bt4n31a2.svg"
     ]
   },
   "src/favicon.svg": {
-    "file": "assets/favicon-Bt4n31A2.svg",
+    "file": "assets/favicon-bt4n31a2.svg",
     "src": "src/favicon.svg"
   }
 }
