@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PodGPT</title>
     <script type="module">
         import RefreshRuntime from 'http://localhost:5173/static/@react-refresh'
         RefreshRuntime.injectIntoGlobalHook(window)
@@ -14,6 +14,9 @@
     <!-- if development -->
     <script type="module" src="http://localhost:5173/static/@vite/client"></script>
     <script type="module" src="http://localhost:5173/static/src/main.tsx"></script>
+
+    <!-- if production -->
+    <!-- <script type="module" src="/dist/main.tsx"></script> -->
 </head>
 <body>
     <div id="root"> </div>
