@@ -36,7 +36,7 @@ __pycache__/
 .env
 
 # Python virtual environment
-venv/
+pod_env/
 
 # OS
 .DS_Store
