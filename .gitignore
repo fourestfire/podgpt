@@ -30,6 +30,7 @@ __pycache__/
 *.swp
 *~
 /static/
+/staticfiles/
 /media/
 
 # Environment files
