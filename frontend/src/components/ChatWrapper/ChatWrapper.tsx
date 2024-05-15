@@ -107,16 +107,24 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ modelType }) => {
     ],
     content: '<p>Select some text to see a bubble menu</p>',
   });
-  const {
-    data: chatsListData,
-    loading: chatsListLoading,
-    error: chatsListError,
-  } = useFetchData('/static/mocks/ChatsList.json'); // calls from the root dir
-  const {
-    data: chatItemsData,
-    loading: chatsItemsLoading,
-    error: chatsItemsError,
-  } = useFetchData('/static/mocks/ChatItems.json');
+  // const {
+  //   data: chatsListData,
+  //   loading: chatsListLoading,
+  //   error: chatsListError,
+  // } = useFetchData('/static/mocks/ChatsList.json'); // calls from the root dir
+  // const {
+  //   data: chatItemsData,
+  //   loading: chatsItemsLoading,
+  //   error: chatsItemsError,
+  // } = useFetchData('/static/mocks/ChatItems.json');
+
+  const [chatsListData, setChatsListData] = useState<any>([]);
+  const [chatsListError, setChatsListError] = useState<any>(null);
+  const [chatsListLoading, setChatsListLoading] = useState(false);
+  
+  const [chatItemsData, setChatItemsData] = useState<any>([]);
+  const [chatsItemsError, setChatsItemsError] = useState<any>(null);
+  const [chatsItemsLoading, setChatsItemsLoading] = useState(false);
 
   const location = useLocation();
   useEffect(() => {
@@ -172,7 +180,7 @@ const ChatWrapper: React.FC<ChatWrapperProps> = ({ modelType }) => {
       // console.log('base64Image:', base64Image ? base64Image.substring(0, 50) : 'No image'); // Log the first 50 characters of base64Image
 
       const requestConfig = {
-        url: 'http://localhost:8000/call-gpt/',
+        url: '/api/call-gpt/',
         method: 'POST',
         data: {
           user_input: value,

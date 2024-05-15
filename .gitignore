@@ -1,6 +1,7 @@
 #react vite
 node_modules
 /dist
+frontend/dist
 /.cache
 /.vite
 /.vscode
@@ -59,4 +60,6 @@ Dockerfile
 # Self-signed SSL certificates
 /key.pem
 /cert.pem
+
+
 

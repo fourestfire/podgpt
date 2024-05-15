@@ -23,8 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 from dotenv import load_dotenv
 load_dotenv()
+from django.core.management.utils import get_random_secret_key # allows Docker build process to generate a random secret key since it can't read .envs
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default=get_random_secret_key())
 if not SECRET_KEY:
     raise ValueError("The DJANGO_SECRET_KEY environment variable is not set")
 
@@ -34,6 +35,19 @@ DEBUG = True
 ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '').split(',')
 CSRF_TRUSTED_ORIGINS = os.getenv('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
 
+# Ensure cookies are sent over HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Redirect all non-HTTPS requests to HTTPS in production
+SECURE_SSL_REDIRECT = os.getenv('DJANGO_ENV') == 'production'
+
+# Enable HSTS 
+# SECURE_HSTS_SECONDS = 60  # Or more, after you're sure everything works
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# Please note that enabling HSTS carelessly can indeed cause serious, irreversible problems. Once a browser sees this policy, it will refuse to connect to the site using HTTP for the duration specified by SECURE_HSTS_SECONDS. If you misconfigure your site and it's not available over HTTPS, or if you need to move it to a server that doesn't support HTTPS, browsers that have received this policy will refuse to connect over HTTP.
+# Therefore, start with a small value and then increase it when you're confident that your site is properly configured for HTTPS. Also, consider adding SECURE_HSTS_INCLUDE_SUBDOMAINS = True and SECURE_HSTS_PRELOAD = True to cover all subdomains and to be eligible for inclusion in browsers' HSTS preload lists, but be aware of the implications.
 
 # Application definition
 
@@ -52,8 +66,8 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -64,7 +78,7 @@ ROOT_URLCONF = 'djangopod.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend','html')], # Django looks for the template source file here
+        'DIRS': [os.path.join(BASE_DIR, 'frontend', 'dist')], # Django looks for the template source file here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,11 +141,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # used during production. Django stores static files here
-print("BASE_DIR is", BASE_DIR) 
+# print("BASE_DIR is", BASE_DIR) 
+print("STATIC_ROOT is", STATIC_ROOT) 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend','public'),
     os.path.join(BASE_DIR, 'frontend','assets'),
     os.path.join(BASE_DIR, 'frontend','dist'),
+    os.path.join(BASE_DIR, 'frontend','html'),
 ]
 
 # Default primary key field type
@@ -149,7 +165,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5173", # for local development
+    "http://localhost:3000", # for local development
+    "http://192.168.0.246:3000",  # for access within local network
+    "http://0.0.0.0:8000",
     "http://127.0.0.1:8000", 
     "https://spiffy-fox-4881fd.netlify.app",
+    "http://192.168.0.246",
+     "http://example.com",  # replace with your domain name
+    "http://203.0.113.0",  # replace with your public IP address
 ]

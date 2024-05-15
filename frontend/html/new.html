@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PodGPT</title>
-    <script type="module">
-        import RefreshRuntime from 'http://localhost:5173/static/@react-refresh'
+    <!-- <script type="module">
+        import RefreshRuntime from '/static/@react-refresh'
         RefreshRuntime.injectIntoGlobalHook(window)
         window.$RefreshReg$ = () => {}
         window.$RefreshSig$ = () => (type) => type
         window.__vite_plugin_react_preamble_installed__ = true
-      </script>
+      </script> -->
     <!-- if development -->
-    <script type="module" src="http://localhost:5173/static/@vite/client"></script>
-    <script type="module" src="http://localhost:5173/static/src/main.tsx"></script>
+    <!-- <script type="module" src="/static/@vite/client"></script> -->
+    <!-- <script type="module" src="/static/src/main.tsx"></script> -->
 
-    <!-- if production -->
-    <!-- <script type="module" src="/dist/main.tsx"></script> -->
+    <!-- if production https://vitejs.dev/guide/backend-integration.html --> 
+
+    for cssFile of manifest[name].css
+    {% for cssFile in manifest[name].css %}
+    <link rel="stylesheet" href="{% static cssFile %}" />
+    {% endfor %}
+
+    <!-- for chunk of importedChunks(manifest, name) -->
+    {% for chunk in importedChunks(manifest, name) %}
+    <!-- for cssFile of chunk.css -->
+    {% for cssFile in chunk.css %}
+    <link rel="stylesheet" href="{% static cssFile %}" />
+    {% endfor %}
+    <link rel="modulepreload" href="{% static chunk.file %}" />
+    {% endfor %}
+
+    <script type="module" src="{% static manifest[name].file %}"></script>
 </head>
+
 <body>
     <div id="root"> </div>
 </body>
+
 </html>

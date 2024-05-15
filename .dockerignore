@@ -1,5 +1,5 @@
 # flyctl launch added from .gitignore
-#react vite
+# react vite
 **/node_modules
 dist
 .cache
@@ -39,3 +39,11 @@ media
 # OS
 **/.DS_Store
 fly.toml
+
+# Exclude everything in the frontend directory
+frontend/*
+# But include these specific subdirectories
+!frontend/assets
+!frontend/dist
+!frontend/public
+!frontend/html

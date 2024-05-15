@@ -4,12 +4,36 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
+# def index(request):
+#     return HttpResponse("Hello, world. You're at the backend index.")
+
+
 def index(request):
-    return HttpResponse("Hello, world. You're at the backend index.")
+    html = """
+    <html>
+    <head>
+        <style>
+            body {
+                background-color: #111111;
+                color: #ffffff;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Django server is online!</h1>
+    </body>
+    </html>
+    """
+    return HttpResponse(html)
 
 
 def front (request, *args, **kwargs):
-    return render(request, 'new.html')
+    return render(request, 'index.html')
 
 
 from openai import OpenAI
@@ -148,7 +172,7 @@ def generate_response(user_input, model_type, message_history=[], images=[]):
     model_mapping = {
         'Standard': 'gpt-3.5-turbo',
         'Emoji': 'gpt-3.5-turbo',
-        'Vision': 'gpt-4-turbo',
+        'Vision': 'gpt-4o',
         # Add more mappings as needed
     }
     
