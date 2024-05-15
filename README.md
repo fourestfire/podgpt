@@ -1,6 +1,27 @@
-# Mantine Vite template
+# PodGPT
 
-## Features
+## Tech Stack
+- Backend: Django with Gunicorn
+- Frontend: React (Mantine Components) + Vite
+- Infra: Nginx + Docker
+
+
+## Running the app
+- On dev
+  - run Vite using `npm run dev` (port 5173)
+  - run Django using `gunicorn -k gthread --bind localhost:8000 djangopod.wsgi`
+  - run Nginx using `brew services start nginx` / `sudo nginx -s reload`
+    - uses the local Nginx config (/opt/homebrew/etc/nginx)
+
+- On prod
+  - run `docker-compose up --build`
+    - Reads docker-compose, and then runs:
+    - Backend Dockerfile: 3.11-alpine, adds envs, collects static, exposes port 8000 using Gunicorn. Not running nginx yet.
+    - Frontend Dockerfile: npm run build and then launches nginx using nginx.conf on frontend. Exposes port 3000. Proxy set up: when /api/ is hit on the frontend, redirects to the backend Docker service
+    - Nginx service: Can be accessed at 8080. Not really necessary right now since we don't need to load balance or anything yet. Consider: rate limiting, SSL/TLS termination, other security controls
+
+
+## Archive readme: Mantine / Vite Specific Features
 
 This template comes with the following features:
 
