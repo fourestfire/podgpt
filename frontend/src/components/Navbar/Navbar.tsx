@@ -15,6 +15,9 @@ import {
   IconScanEye,
   IconSquareRotated,
   IconPacman,
+  IconBooks,
+  IconTool,
+  IconBox,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './Navbar.module.css';
@@ -25,8 +28,9 @@ const data = [
   { link: '/', label: 'Standard', icon: IconSquareRotated },
   { link: '/emoji', label: 'Emoji', icon: IconMoodSmileBeam },
   { link: '/vision', label: 'Vision', icon: IconScanEye },
-//   { link: '', label: 'SSH Keys', icon: IconKey },
-//   { link: '', label: 'Databases', icon: IconDatabaseImport },
+  { link: '/imagegen', label: 'Image Gen', icon: IconBox },
+  { link: '/learning', label: 'Learning', icon: IconBooks },
+  { link: '/DIY', label: 'DIY Pro', icon: IconTool },
 //   { link: '', label: 'Authentication', icon: Icon2fa },
 //   { link: '', label: 'Other Settings', icon: IconSettings },
 ];
@@ -71,7 +75,7 @@ export function Navbar() {
       <div className={classes.footer}>
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
           <IconPacman className={classes.linkIcon} stroke={1.5} />
-          <span>About Us</span>
+          <span>Support</span>
         </a>
 
         <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>

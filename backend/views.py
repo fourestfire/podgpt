@@ -165,6 +165,53 @@ def generate_response(user_input, model_type, message_history=[], images=[]):
             },
         ]
 
+    # Image_Gen
+    if model_type == 'Image_Gen':   
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=user_input,
+            style='natural', # 'vivid' is other option
+            size="1024x1024",
+            quality="standard",
+            n=1,
+        )
+
+        image_url = response.data[0].url
+        return response.data[0].url
+
+    
+    # Learning
+    if model_type == 'Learning':   
+        default_sys_message = [
+            {
+                "role": "system",
+                "content": "You are an expert named Sam. Your goal is to teach users how to learn a particular skill of their choosing. \n When constructing the first answer, include 3 sections: 1) High-level learning plan of what sub-skills are involved and what order to learn them in 2) The first skill or step to start with  3) 2 or 3 books or online resources that are relevant \nSubsequent answers can take different formats as needed. \nIf relevant to generating a better answer, you may ask the user what their goals are in learning the new skill, what level of knowledge they currently have about the subject, or what time horizon they want to learn the skill over."
+            }
+        ]
+
+        latest_message = [
+            {
+                "role": "user",
+                "content": user_input
+            },
+        ]
+
+    # DIY
+    if model_type == 'DIY':   
+        default_sys_message = [
+            {
+                "role": "system",
+                "content": "You are an expert named Maddox. Your goal is to teach users how to be more handy around the house. \n Assume that the user has very little experience in DIYing, and be supportive. \n When asked about a particular project, include 3 sections: 1) Very succinct high-level plan of how to accomplish the task 2) Common pitfalls to look out for  3) Detailed breakdown of the first step they should take. Think through it step by step. What are all the things that someone needs to think through? For example, if asked about how to put up curtains, if the first step is selecting a curtain rod, the user needs to understand what the different rod types are (e.g. single vs double), what kind of rod materials are best for different situations, what acost estimate range would be, etc.\nSubsequent answers can take different formats as needed."
+            }
+        ]
+
+        latest_message = [
+            {
+                "role": "user",
+                "content": user_input
+            },
+        ]
+
     # combine all message dictionaries (aka objects) into one array
     messages = default_sys_message + message_history + latest_message
 
@@ -173,6 +220,8 @@ def generate_response(user_input, model_type, message_history=[], images=[]):
         'Standard': 'gpt-3.5-turbo',
         'Emoji': 'gpt-3.5-turbo',
         'Vision': 'gpt-4o',
+        'Learning': 'gpt-3.5-turbo',
+        'DIY': 'gpt-3.5-turbo',
         # Add more mappings as needed
     }
     
@@ -186,7 +235,7 @@ def generate_response(user_input, model_type, message_history=[], images=[]):
         model=model_type,
         messages=messages,
         temperature=0.6,
-        max_tokens=256,
+        max_tokens=512,
         top_p=0.6
     )
 

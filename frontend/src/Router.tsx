@@ -18,6 +18,18 @@ const router = createBrowserRouter([
     path: '/vision/', 
     element: <HomePage modelType="Vision" />, 
   },
+  {
+    path: '/learning/', 
+    element: <HomePage modelType="Learning" />, 
+  },
+  {
+    path: '/imagegen/', 
+    element: <HomePage modelType="Image_Gen" />, 
+  },
+  {
+    path: '/diy/', 
+    element: <HomePage modelType="DIY" />, 
+  },
 ]);
 
 export function Router() {
