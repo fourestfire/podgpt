@@ -1,10 +1,14 @@
 # PodGPT
 
+## Objectives
+- Explore Generative AI models and test Copilot
+- Explore common frontend and backend frameworks and understand production architecture options
+- Create a base for future fullstack projects
+
 ## Tech Stack
 - Backend: Django with Gunicorn
 - Frontend: React (Mantine Components) + Vite
 - Infra: Nginx + Docker
-
 
 ## Running the app
 - On dev
@@ -21,19 +25,16 @@
     - Nginx service: Can be accessed at 8080. Not really necessary right now since we don't need to load balance or anything yet. Consider: rate limiting, SSL/TLS termination, other security controls
 
 
-## Archive readme: Mantine / Vite Specific Features
+## Archived readme: Mantine / Vite Specific Features
 
-This template comes with the following features:
-
+This frontend template comes with the following features:
 - [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Storybook](https://storybook.js.org/)
 - [Vitest](https://vitest.dev/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
 - ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
 
-## npm scripts
-
-## Build and dev scripts
+## npm build and dev scripts
 
 - `dev` – start development server
 - `build` – build production version of the app
