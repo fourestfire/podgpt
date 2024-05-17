@@ -5,10 +5,14 @@
 - Explore common frontend and backend frameworks and understand production architecture options
 - Create a base for future fullstack projects
 
+## Screenshot
+![image](https://github.com/fourestfire/podgpt/assets/10125091/19311e26-b402-4376-ba20-7cd3b9d03730)
+
 ## Tech Stack
 - Backend: Django with Gunicorn
 - Frontend: React (Mantine Components) + Vite
 - Infra: Nginx + Docker
+- AI Models: GPT-3-Turbo and GPT4o. Will test other models in a subsequent update
 
 ## Running the app
 - On dev
